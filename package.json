@@ -1,0 +1,40 @@
+{
+  "name": "react-native-swipeable",
+  "version": "0.0.0",
+  "description": "React Native swipe component for discoverable functionality.",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "make build",
+    "lint": "make lint"
+  },
+  "author": "Jeff Hanson",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-eslint": "^7.1.1",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "eslint": "^3.12.0",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-babel": "^4.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.8.0"
+  },
+  "peerDependencies": {
+    "react": ">=15.2.0",
+    "react-native": ">=0.29.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jshanson7/react-native-swipeable.git"
+  },
+  "keywords": [
+    "react",
+    "native",
+    "swipe",
+    "ListView",
+    "TableView"
+  ]
+}
