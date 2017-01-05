@@ -500,28 +500,23 @@ export default class Swipeable extends PureComponent {
     const canSwipeLeft = this._canSwipeLeft();
     const canSwipeRight = this._canSwipeRight();
     const count = buttons.length;
-    const inputRange = isLeftButtons ?
-      [0, canSwipeRight ? width : 0] :
-      [canSwipeLeft ? -width : 0, 0];
+    const leftEnd = canSwipeLeft ? -width : 0;
+    const rightEnd = canSwipeRight ? width : 0;
+    const inputRange = isLeftButtons ? [0, rightEnd] : [leftEnd, 0];
 
     return buttons.map((buttonContent, index) => {
       const outputMultiplier = -index / count;
-      const outputRange = isLeftButtons ?
-        [0, (canSwipeRight ? width : 0) * outputMultiplier] :
-        [(canSwipeLeft ? -width : 0) * outputMultiplier, 0];
-
+      const outputRange = isLeftButtons ? [0, rightEnd * outputMultiplier] : [leftEnd * outputMultiplier, 0];
+      const transform = [{
+        translateX: pan.x.interpolate({
+          inputRange,
+          outputRange,
+          extrapolate: 'clamp'
+        })
+      }];
       const buttonStyle = [
         StyleSheet.absoluteFill,
-        {
-          width,
-          transform: [{
-            translateX: pan.x.interpolate({
-              inputRange,
-              outputRange,
-              extrapolate: 'clamp'
-            })
-          }]
-        },
+        {width, transform},
         isLeftButtons ? leftButtonContainerStyle : rightButtonContainerStyle
       ];
 
@@ -549,22 +544,17 @@ export default class Swipeable extends PureComponent {
     const {pan, width} = this.state;
     const canSwipeLeft = this._canSwipeLeft();
     const canSwipeRight = this._canSwipeRight();
-    const containerStyle = [
-      {
-        transform: [{
-          translateX: pan.x.interpolate({
-            inputRange: [canSwipeLeft ? -width : 0, canSwipeRight ? width : 0],
-            outputRange: [
-              canSwipeLeft ? -width + StyleSheet.hairlineWidth : 0,
-              canSwipeRight ? width - StyleSheet.hairlineWidth : 0
-            ],
-            extrapolate: 'clamp'
-          })
-        }]
-      },
-      styles.container,
-      style
-    ];
+    const transform = [{
+      translateX: pan.x.interpolate({
+        inputRange: [canSwipeLeft ? -width : 0, canSwipeRight ? width : 0],
+        outputRange: [
+          canSwipeLeft ? -width + StyleSheet.hairlineWidth : 0,
+          canSwipeRight ? width - StyleSheet.hairlineWidth : 0
+        ],
+        extrapolate: 'clamp'
+      })
+    }];
+    const containerStyle = [{transform}, styles.container, style];
 
     return (
       <Animated.View onLayout={this._handleLayout} style={containerStyle} {...this._panResponder.panHandlers} {...props}>
