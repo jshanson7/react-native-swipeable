@@ -1,7 +1,7 @@
 {
   "name": "react-native-swipeable",
   "version": "0.0.1",
-  "description": "React Native swipe component for discoverable functionality",
+  "description": "React Native swipe component",
   "main": "lib/index.js",
   "scripts": {
     "build": "make build",
