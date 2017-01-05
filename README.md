@@ -84,6 +84,18 @@ class MyListItem extends Component {
 }
 ```
 
+## Example
+
+To run [the example](https://github.com/jshanson7/react-native-swipeable/blob/master/example/swipeable-example.js):
+
+```sh
+cd example
+npm install
+react-native run-ios
+```
+
+![Example](example/example.png)
+
 ## License
 
 MIT
