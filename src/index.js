@@ -25,8 +25,8 @@ export default class Swipeable extends PureComponent {
     onLeftActionRelease: PropTypes.func,
     onLeftActionComplete: PropTypes.func,
     leftActionActivationDistance: PropTypes.number,
-    leftActionReleaseAnimationConfig: PropTypes.object,
     leftActionReleaseAnimationFn: animationFnPropType,
+    leftActionReleaseAnimationConfig: PropTypes.object,
 
     // right action lifecycle
     onRightActionActivate: PropTypes.func,
@@ -44,8 +44,8 @@ export default class Swipeable extends PureComponent {
     onLeftButtonsOpenComplete: PropTypes.func,
     leftButtonWidth: PropTypes.number,
     leftButtonsOpenActivationDistance: PropTypes.number,
-    leftButtonsOpenReleaseAnimationConfig: PropTypes.object,
     leftButtonsOpenReleaseAnimationFn: animationFnPropType,
+    leftButtonsOpenReleaseAnimationConfig: PropTypes.object,
 
     // right buttons lifecycle
     onRightButtonsOpenActivate: PropTypes.func,
@@ -54,8 +54,8 @@ export default class Swipeable extends PureComponent {
     onRightButtonsOpenRelease: PropTypes.func,
     rightButtonWidth: PropTypes.number,
     rightButtonsOpenActivationDistance: PropTypes.number,
-    rightButtonsOpenReleaseAnimationConfig: PropTypes.object,
     rightButtonsOpenReleaseAnimationFn: animationFnPropType,
+    rightButtonsOpenReleaseAnimationConfig: PropTypes.object,
 
     // base swipe lifecycle
     onSwipeStart: PropTypes.func,
