@@ -1,5 +1,7 @@
 # React Native Swipeable [![NPM version][npm-image]][npm-url]
 
+React Native swipe component for discoverable functionality.
+
 ![Demo](demo.gif)
 
 ## Installation
