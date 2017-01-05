@@ -94,7 +94,7 @@ npm install
 react-native run-ios
 ```
 
-![Example](example/example.png)
+![Example](example/example.gif)
 
 ## License
 
