@@ -1,6 +1,6 @@
 {
   "name": "react-native-swipeable",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React Native swipe component",
   "main": "lib/index.js",
   "scripts": {
