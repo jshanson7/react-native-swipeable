@@ -297,10 +297,12 @@ export default class Swipeable extends PureComponent {
 
   _handlePanResponderEnd = (event, gestureState) => {
     const {
-      onLeftButtonsOpenRelease,
-      onRightButtonsOpenRelease,
+      onLeftActionDeactivate,
       onLeftActionRelease,
+      onLeftButtonsOpenRelease,
+      onRightActionDeactivate,
       onRightActionRelease,
+      onRightButtonsOpenRelease,
       onSwipeRelease
     } = this.props;
     const {
@@ -339,7 +341,7 @@ export default class Swipeable extends PureComponent {
 
     pan.flattenOffset();
 
-    animationFn(pan, animationConfig).start(animationInfo => {
+    animationFn(pan, animationConfig).start(() => {
       if (this._unmounted) {
         return;
       }
@@ -352,10 +354,11 @@ export default class Swipeable extends PureComponent {
         onSwipeComplete
       } = this.props;
 
-      onSwipeComplete(animationInfo);
+      onSwipeComplete(event, gestureState);
 
       if (leftActionActivated) {
-        onLeftActionComplete(animationInfo);
+        onLeftActionComplete(event, gestureState);
+        onLeftActionDeactivate(event, gestureState);
       }
 
       if (leftButtonsOpenActivated) {
@@ -363,7 +366,8 @@ export default class Swipeable extends PureComponent {
       }
 
       if (rightActionActivated) {
-        onRightActionComplete(animationInfo);
+        onRightActionComplete(event, gestureState);
+        onRightActionDeactivate(event, gestureState);
       }
 
       if (rightButtonsOpenActivated) {
