@@ -213,7 +213,8 @@ export default class Swipeable extends PureComponent {
       onRightActionActivate,
       onRightActionDeactivate,
       onRightButtonsOpenActivate,
-      onRightButtonsOpenDeactivate
+      onRightButtonsOpenDeactivate,
+      onSwipeMove
     } = this.props;
     const {
       lastOffset,
@@ -236,7 +237,7 @@ export default class Swipeable extends PureComponent {
     let nextRightButtonsOpenActivated = rightButtonsOpenActivated;
 
     this._handlePan(event, gestureState);
-    this.props.onSwipeMove(event, gestureState);
+    onSwipeMove(event, gestureState);
 
     if (!leftActionActivated && canSwipeRight && x >= leftActionActivationDistance) {
       nextLeftActionActivated = true;
