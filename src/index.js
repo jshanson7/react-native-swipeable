@@ -45,9 +45,11 @@ export default class Swipeable extends PureComponent {
     onLeftButtonsCloseRelease: PropTypes.func,
     onLeftButtonsCloseComplete: PropTypes.func,
     leftButtonWidth: PropTypes.number,
-    leftButtonsOpenActivationDistance: PropTypes.number,
+    leftButtonsActivationDistance: PropTypes.number,
     leftButtonsOpenReleaseAnimationFn: animationFnPropType,
     leftButtonsOpenReleaseAnimationConfig: PropTypes.object,
+    leftButtonsCloseReleaseAnimationFn: animationFnPropType,
+    leftButtonsCloseReleaseAnimationConfig: PropTypes.object,
 
     // right buttons lifecycle
     onRightButtonsActivate: PropTypes.func,
@@ -57,9 +59,11 @@ export default class Swipeable extends PureComponent {
     onRightButtonsCloseRelease: PropTypes.func,
     onRightButtonsCloseComplete: PropTypes.func,
     rightButtonWidth: PropTypes.number,
-    rightButtonsOpenActivationDistance: PropTypes.number,
+    rightButtonsActivationDistance: PropTypes.number,
     rightButtonsOpenReleaseAnimationFn: animationFnPropType,
     rightButtonsOpenReleaseAnimationConfig: PropTypes.object,
+    rightButtonsCloseReleaseAnimationFn: animationFnPropType,
+    rightButtonsCloseReleaseAnimationConfig: PropTypes.object,
 
     // base swipe lifecycle
     onSwipeStart: PropTypes.func,
@@ -115,9 +119,11 @@ export default class Swipeable extends PureComponent {
     onLeftButtonsCloseRelease: noop,
     onLeftButtonsCloseComplete: noop,
     leftButtonWidth: 75,
-    leftButtonsOpenActivationDistance: 75,
+    leftButtonsActivationDistance: 75,
     leftButtonsOpenReleaseAnimationFn: null,
     leftButtonsOpenReleaseAnimationConfig: null,
+    leftButtonsCloseReleaseAnimationFn: null,
+    leftButtonsCloseReleaseAnimationConfig: null,
 
     // right buttons lifecycle
     onRightButtonsActivate: noop,
@@ -127,9 +133,11 @@ export default class Swipeable extends PureComponent {
     onRightButtonsCloseRelease: noop,
     onRightButtonsCloseComplete: noop,
     rightButtonWidth: 75,
-    rightButtonsOpenActivationDistance: 75,
+    rightButtonsActivationDistance: 75,
     rightButtonsOpenReleaseAnimationFn: null,
     rightButtonsOpenReleaseAnimationConfig: null,
+    rightButtonsCloseReleaseAnimationFn: null,
+    rightButtonsCloseReleaseAnimationConfig: null,
 
     // base swipe lifecycle
     onSwipeStart: noop,
@@ -213,13 +221,13 @@ export default class Swipeable extends PureComponent {
   _handlePanResponderMove = (event, gestureState) => {
     const {
       leftActionActivationDistance,
-      leftButtonsOpenActivationDistance,
+      leftButtonsActivationDistance,
       onLeftActionActivate,
       onLeftActionDeactivate,
       onLeftButtonsActivate,
       onLeftButtonsDeactivate,
       rightActionActivationDistance,
-      rightButtonsOpenActivationDistance,
+      rightButtonsActivationDistance,
       onRightActionActivate,
       onRightActionDeactivate,
       onRightButtonsActivate,
@@ -269,7 +277,7 @@ export default class Swipeable extends PureComponent {
       onRightActionDeactivate(event, gestureState);
     }
 
-    if (!leftButtonsActivated && hasLeftButtons && !isSwipingLeft && x >= leftButtonsOpenActivationDistance) {
+    if (!leftButtonsActivated && hasLeftButtons && !isSwipingLeft && x >= leftButtonsActivationDistance) {
       nextLeftButtonsActivated = true;
       onLeftButtonsActivate(event, gestureState);
     }
@@ -279,7 +287,7 @@ export default class Swipeable extends PureComponent {
       onLeftButtonsDeactivate(event, gestureState);
     }
 
-    if (!rightButtonsActivated && hasRightButtons && !isSwipingRight && x <= -rightButtonsOpenActivationDistance) {
+    if (!rightButtonsActivated && hasRightButtons && !isSwipingRight && x <= -rightButtonsActivationDistance) {
       nextRightButtonsActivated = true;
       onRightButtonsActivate(event, gestureState);
     }
@@ -446,15 +454,19 @@ export default class Swipeable extends PureComponent {
     const {
       leftActionReleaseAnimationFn,
       leftButtonsOpenReleaseAnimationFn,
+      leftButtonsCloseReleaseAnimationFn,
       rightActionReleaseAnimationFn,
       rightButtonsOpenReleaseAnimationFn,
+      rightButtonsCloseReleaseAnimationFn,
       swipeReleaseAnimationFn
     } = this.props;
     const {
       leftActionActivated,
       leftButtonsActivated,
+      leftButtonsOpen,
       rightActionActivated,
-      rightButtonsActivated
+      rightButtonsActivated,
+      rightButtonsOpen
     } = this.state;
 
     if (leftActionActivated && leftActionReleaseAnimationFn) {
@@ -469,8 +481,16 @@ export default class Swipeable extends PureComponent {
       return leftButtonsOpenReleaseAnimationFn;
     }
 
+    if (!leftButtonsActivated && leftButtonsOpen && leftButtonsCloseReleaseAnimationFn) {
+      return leftButtonsCloseReleaseAnimationFn;
+    }
+
     if (rightButtonsActivated && rightButtonsOpenReleaseAnimationFn) {
       return rightButtonsOpenReleaseAnimationFn;
+    }
+
+    if (!rightButtonsActivated && rightButtonsOpen && rightButtonsCloseReleaseAnimationFn) {
+      return rightButtonsCloseReleaseAnimationFn;
     }
 
     return swipeReleaseAnimationFn;
@@ -481,18 +501,22 @@ export default class Swipeable extends PureComponent {
       leftActionReleaseAnimationConfig,
       leftButtons,
       leftButtonsOpenReleaseAnimationConfig,
+      leftButtonsCloseReleaseAnimationConfig,
       leftButtonWidth,
       rightActionReleaseAnimationConfig,
       rightButtons,
       rightButtonsOpenReleaseAnimationConfig,
+      rightButtonsCloseReleaseAnimationConfig,
       rightButtonWidth,
       swipeReleaseAnimationConfig
     } = this.props;
     const {
       leftActionActivated,
       leftButtonsActivated,
+      leftButtonsOpen,
       rightActionActivated,
-      rightButtonsActivated
+      rightButtonsActivated,
+      rightButtonsOpen
     } = this.state;
 
     if (leftActionActivated && leftActionReleaseAnimationConfig) {
@@ -523,6 +547,14 @@ export default class Swipeable extends PureComponent {
         },
         ...rightButtonsOpenReleaseAnimationConfig
       };
+    }
+
+    if (!leftButtonsActivated && leftButtonsOpen && leftButtonsCloseReleaseAnimationConfig) {
+      return leftButtonsCloseReleaseAnimationConfig;
+    }
+
+    if (!rightButtonsActivated && rightButtonsOpen && rightButtonsCloseReleaseAnimationConfig) {
+      return rightButtonsCloseReleaseAnimationConfig;
     }
 
     return swipeReleaseAnimationConfig;
