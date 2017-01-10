@@ -37,7 +37,7 @@ function MyListItem() {
 
 | prop                            | type         | default | description                                                                               |
 |---------------------------------|--------------|---------|-------------------------------------------------------------------------------------------|
-| `children`                      | renderable   | `null`  | (optional) swipeable content                                                              |
+| `children`                      | renderable   | `null`  | swipeable content                                                                         |
 | `leftContent`                   | renderable   | `null`  | (optional) left content visible during pull action                                        |
 | `rightContent`                  | renderable   | `null`  | (optional) right content visible during pull action                                       |
 | `leftButtons`                   | renderable[] | `null`  | (optional) array of buttons, first being the innermost; ignored if `leftContent` present  |
