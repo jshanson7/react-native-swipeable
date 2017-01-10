@@ -191,8 +191,10 @@ export default class Swipeable extends PureComponent {
       lastOffset: {x: 0, y: 0},
       leftActionActivated: false,
       leftButtonsActivated: false,
+      leftButtonsOpen: false,
       rightActionActivated: false,
-      rightButtonsActivated: false
+      rightButtonsActivated: false,
+      rightButtonsOpen: false
     });
 
     pan.flattenOffset();
