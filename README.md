@@ -45,7 +45,7 @@ function MyListItem() {
 | `leftActionActivationDistance`  | integer      | 125     | (optional) minimum swipe distance to activate left action                                 |
 | `onLeftActionRelease`           | function     | `null`  | (optional) user has swiped beyond `leftActionActivationDistance` and released             |
 | `rightActionActivationDistance` | integer      | 125     | (optional) minimum swipe distance to activate right action                                |
-| `onRightActionRelease`          | function     | `null`  | (optional) user has swiped beyond `leftActionActivationDistance` and released             |
+| `onRightActionRelease`          | function     | `null`  | (optional) user has swiped beyond `rightActionActivationDistance` and released            |
 | `leftButtonWidth`               | integer      | 75      | (optional) resting visible peek of each left button after buttons are swiped open         |
 | `rightButtonWidth`              | integer      | 75      | (optional) resting visible peek of each right button after buttons are swiped open        |
 | `onRef`                         | function     | `null`  | (optional) receive swipeable component instance reference                                 |
