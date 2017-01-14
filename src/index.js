@@ -54,8 +54,8 @@ export default class Swipeable extends PureComponent {
     // right buttons lifecycle
     onRightButtonsActivate: PropTypes.func,
     onRightButtonsDeactivate: PropTypes.func,
-    onRightButtonsOpenComplete: PropTypes.func,
     onRightButtonsOpenRelease: PropTypes.func,
+    onRightButtonsOpenComplete: PropTypes.func,
     onRightButtonsCloseRelease: PropTypes.func,
     onRightButtonsCloseComplete: PropTypes.func,
     rightButtonWidth: PropTypes.number,
