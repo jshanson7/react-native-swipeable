@@ -2,7 +2,7 @@
 
 A powerful React Native swipe component.  Supports both iOS and Android.
 
-![Demo](demo.gif)
+<img src="demo.gif" width="310">
 
 ## Installation
 
