@@ -622,22 +622,21 @@ export default class Swipeable extends PureComponent {
         extrapolate: 'clamp'
       })
     }];
-    const containerStyle = [{transform}, styles.container, style];
 
     return (
-      <Animated.View onLayout={this._handleLayout} style={containerStyle} {...this._panResponder.panHandlers} {...props}>
+      <View onLayout={this._handleLayout} style={[styles.container, style]} {...this._panResponder.panHandlers} {...props}>
         {canSwipeRight && (
-          <View style={[{marginLeft: -width, width}, leftContainerStyle]}>
+          <Animated.View style={[{transform, marginLeft: -width, width}, leftContainerStyle]}>
             {leftContent || this._renderButtons(leftButtons, true)}
-          </View>
+          </Animated.View>
         )}
-        <View style={[styles.content, contentContainerStyle]}>{children}</View>
+        <Animated.View style={[{transform}, styles.content, contentContainerStyle]}>{children}</Animated.View>
         {canSwipeLeft && (
-          <View style={[{marginRight: -width, width}, rightContainerStyle]}>
+          <Animated.View style={[{transform, marginRight: -width, width}, rightContainerStyle]}>
             {rightContent || this._renderButtons(rightButtons, false)}
-          </View>
+          </Animated.View>
         )}
-      </Animated.View>
+      </View>
     );
   }
 }

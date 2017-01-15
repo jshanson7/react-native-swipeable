@@ -1,6 +1,6 @@
 # React Native Swipeable [![NPM version][npm-image]][npm-url]
 
-A powerful React Native swipe component.
+A powerful React Native swipe component.  Supports both iOS and Android.
 
 ![Demo](demo.gif)
 
@@ -85,9 +85,10 @@ class MyListItem extends Component {
 To run [the example](https://github.com/jshanson7/react-native-swipeable/blob/master/example/swipeable-example.js):
 
 ```sh
+npm run build
 cd example
 npm install
-react-native run-ios
+react-native run-ios # or run-android
 ```
 
 ![Example](example/example.gif)
