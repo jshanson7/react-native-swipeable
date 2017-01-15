@@ -2,7 +2,7 @@
 
 A powerful React Native swipe component.  Supports both iOS and Android.
 
-<img src="demo.gif" width="310">
+<img src="https://raw.githubusercontent.com/jshanson7/react-native-swipeable/master/demo.gif" width="310">
 
 ## Installation
 
@@ -91,7 +91,7 @@ npm install
 react-native run-ios # or run-android
 ```
 
-<img src="example/example.ios.gif" width="275"> <img src="example/example.android.gif" width="275">
+<img src="https://raw.githubusercontent.com/jshanson7/react-native-swipeable/master/example/example.ios.gif" width="275"> <img src="https://raw.githubusercontent.com/jshanson7/react-native-swipeable/master/example/example.android.gif" width="275">
 
 ## License
 
