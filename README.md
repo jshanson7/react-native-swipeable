@@ -91,7 +91,7 @@ npm install
 react-native run-ios # or run-android
 ```
 
-![Example](example/example.gif)
+<img src="example/example.ios.gif" width="310"> <img src="example/example.android.gif" width="275">
 
 ## License
 
