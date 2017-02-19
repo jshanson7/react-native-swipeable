@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Swipeable from 'react-native-swipeable';
 
 export default function SwipeableExample() {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Example1/>
       <Example2/>
       <Example3/>
-    </View>
+    </ScrollView>
   );
 }
 

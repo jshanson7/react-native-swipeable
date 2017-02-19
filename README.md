@@ -93,6 +93,33 @@ react-native run-ios # or run-android
 
 <img src="https://raw.githubusercontent.com/jshanson7/react-native-swipeable/master/example/example.ios.gif" width="275"> <img src="https://raw.githubusercontent.com/jshanson7/react-native-swipeable/master/example/example.android.gif" width="275">
 
+## Common Issues
+
+> Action being triggered more than once ([#3](https://github.com/jshanson7/react-native-swipeable/issues/3))
+
+This seems to occur occasionally (but not always) with certain `ScrollView` and `ListView` configurations.  The fix is simple though, just ensure that `scrollEnabled` is set to `false` while the user is swiping a row.
+
+```js
+<ScrollView scrollEnabled={!this.state.isSwiping}>
+  <Swipeable
+    onSwipeStart={() => this.setState({isSwiping: true})}
+    onSwipeRelease={() => this.setState({isSwiping: false})}
+  </Swipeable>
+</ScrollView>
+```
+or:
+```js
+<ListView
+  scrollEnabled={!this.state.isSwiping}
+  renderRow={() => (
+    <Swipeable
+      onSwipeStart={() => this.setState({isSwiping: true})}
+      onSwipeRelease={() => this.setState({isSwiping: false})}
+    </Swipeable>
+  )}
+/>
+```
+
 ## License
 
 MIT
