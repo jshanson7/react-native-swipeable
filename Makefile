@@ -1,11 +1,12 @@
 BIN = ./node_modules/.bin
 SRC = $(shell find ./src -name '*.js')
 LIB = $(SRC:./src/%=lib/%)
+EXAMPLE = $(shell find ./example/*.js)
 
 build:: $(LIB)
 
 lint::
-	@$(BIN)/eslint $(SRC)
+	@$(BIN)/eslint $(SRC) $(EXAMPLE)
 
 release-patch: build lint
 	@$(call release,patch)

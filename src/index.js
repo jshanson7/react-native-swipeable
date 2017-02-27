@@ -217,7 +217,7 @@ export default class Swipeable extends PureComponent {
     const {lastOffset, pan} = this.state;
 
     pan.setOffset(lastOffset);
-    this.props.onSwipeStart(event, gestureState);
+    this.props.onSwipeStart(event, gestureState, this);
   };
 
   _handlePanResponderMove = (event, gestureState) => {
@@ -257,46 +257,46 @@ export default class Swipeable extends PureComponent {
     let nextRightButtonsActivated = rightButtonsActivated;
 
     this._handlePan(event, gestureState);
-    onSwipeMove(event, gestureState);
+    onSwipeMove(event, gestureState, this);
 
     if (!leftActionActivated && canSwipeRight && x >= leftActionActivationDistance) {
       nextLeftActionActivated = true;
-      onLeftActionActivate(event, gestureState);
+      onLeftActionActivate(event, gestureState, this);
     }
 
     if (leftActionActivated && canSwipeRight && x < leftActionActivationDistance) {
       nextLeftActionActivated = false;
-      onLeftActionDeactivate(event, gestureState);
+      onLeftActionDeactivate(event, gestureState, this);
     }
 
     if (!rightActionActivated && canSwipeLeft && x <= -rightActionActivationDistance) {
       nextRightActionActivated = true;
-      onRightActionActivate(event, gestureState);
+      onRightActionActivate(event, gestureState, this);
     }
 
     if (rightActionActivated && canSwipeLeft && x > -rightActionActivationDistance) {
       nextRightActionActivated = false;
-      onRightActionDeactivate(event, gestureState);
+      onRightActionDeactivate(event, gestureState, this);
     }
 
     if (!leftButtonsActivated && hasLeftButtons && !isSwipingLeft && x >= leftButtonsActivationDistance) {
       nextLeftButtonsActivated = true;
-      onLeftButtonsActivate(event, gestureState);
+      onLeftButtonsActivate(event, gestureState, this);
     }
 
     if (leftButtonsActivated && hasLeftButtons && isSwipingLeft) {
       nextLeftButtonsActivated = false;
-      onLeftButtonsDeactivate(event, gestureState);
+      onLeftButtonsDeactivate(event, gestureState, this);
     }
 
     if (!rightButtonsActivated && hasRightButtons && !isSwipingRight && x <= -rightButtonsActivationDistance) {
       nextRightButtonsActivated = true;
-      onRightButtonsActivate(event, gestureState);
+      onRightButtonsActivate(event, gestureState, this);
     }
 
     if (rightButtonsActivated && hasRightButtons && isSwipingRight) {
       nextRightButtonsActivated = false;
-      onRightButtonsDeactivate(event, gestureState);
+      onRightButtonsDeactivate(event, gestureState, this);
     }
 
     const needsUpdate =
@@ -339,30 +339,30 @@ export default class Swipeable extends PureComponent {
     const animationFn = this._getReleaseAnimationFn();
     const animationConfig = this._getReleaseAnimationConfig();
 
-    onSwipeRelease(event, gestureState);
+    onSwipeRelease(event, gestureState, this);
 
     if (leftActionActivated) {
-      onLeftActionRelease(event, gestureState);
+      onLeftActionRelease(event, gestureState, this);
     }
 
     if (rightActionActivated) {
-      onRightActionRelease(event, gestureState);
+      onRightActionRelease(event, gestureState, this);
     }
 
     if (leftButtonsActivated && !leftButtonsOpen) {
-      onLeftButtonsOpenRelease(event, gestureState);
+      onLeftButtonsOpenRelease(event, gestureState, this);
     }
 
     if (!leftButtonsActivated && leftButtonsOpen) {
-      onLeftButtonsCloseRelease(event, gestureState);
+      onLeftButtonsCloseRelease(event, gestureState, this);
     }
 
     if (rightButtonsActivated && !rightButtonsOpen) {
-      onRightButtonsOpenRelease(event, gestureState);
+      onRightButtonsOpenRelease(event, gestureState, this);
     }
 
     if (!rightButtonsActivated && rightButtonsOpen) {
-      onRightButtonsCloseRelease(event, gestureState);
+      onRightButtonsCloseRelease(event, gestureState, this);
     }
 
     this.setState({
@@ -390,32 +390,32 @@ export default class Swipeable extends PureComponent {
         onSwipeComplete
       } = this.props;
 
-      onSwipeComplete(event, gestureState);
+      onSwipeComplete(event, gestureState, this);
 
       if (leftActionActivated) {
-        onLeftActionComplete(event, gestureState);
-        onLeftActionDeactivate(event, gestureState);
+        onLeftActionComplete(event, gestureState, this);
+        onLeftActionDeactivate(event, gestureState, this);
       }
 
       if (rightActionActivated) {
-        onRightActionComplete(event, gestureState);
-        onRightActionDeactivate(event, gestureState);
+        onRightActionComplete(event, gestureState, this);
+        onRightActionDeactivate(event, gestureState, this);
       }
 
       if (leftButtonsActivated && !leftButtonsOpen) {
-        onLeftButtonsOpenComplete(event, gestureState);
+        onLeftButtonsOpenComplete(event, gestureState, this);
       }
 
       if (!leftButtonsActivated && leftButtonsOpen) {
-        onLeftButtonsCloseComplete(event, gestureState);
+        onLeftButtonsCloseComplete(event, gestureState, this);
       }
 
       if (rightButtonsActivated && !rightButtonsOpen) {
-        onRightButtonsOpenComplete(event, gestureState);
+        onRightButtonsOpenComplete(event, gestureState, this);
       }
 
       if (!rightButtonsActivated && rightButtonsOpen) {
-        onRightButtonsCloseComplete(event, gestureState);
+        onRightButtonsCloseComplete(event, gestureState, this);
       }
     });
   };

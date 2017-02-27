@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "update-lib": "rm -r node_modules/react-native-swipeable && cd ../ && npm run build && cd example && npm install"
   },
   "dependencies": {
     "react": "15.4.1",

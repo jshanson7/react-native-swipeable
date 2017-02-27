@@ -2,17 +2,44 @@ import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Swipeable from 'react-native-swipeable';
 
-export default function SwipeableExample() {
-  return (
-    <ScrollView style={styles.container}>
-      <Example1/>
-      <Example2/>
-      <Example3/>
-    </ScrollView>
-  );
+export default class SwipeableExample extends Component {
+
+  state = {
+    currentlyOpenSwipeable: null
+  };
+
+  handleScroll = () => {
+    const {currentlyOpenSwipeable} = this.state;
+
+    if (currentlyOpenSwipeable) {
+      currentlyOpenSwipeable.recenter();
+    }
+  };
+
+  render() {
+    const {currentlyOpenSwipeable} = this.state;
+    const itemProps = {
+      onOpen: (event, gestureState, swipeable) => {
+        if (currentlyOpenSwipeable && currentlyOpenSwipeable !== swipeable) {
+          currentlyOpenSwipeable.recenter();
+        }
+
+        this.setState({currentlyOpenSwipeable: swipeable});
+      },
+      onClose: () => this.setState({currentlyOpenSwipeable: null})
+    };
+
+    return (
+      <ScrollView onScroll={this.handleScroll} style={styles.container}>
+        <Example1 {...itemProps}/>
+        <Example2 {...itemProps}/>
+        <Example3 {...itemProps}/>
+      </ScrollView>
+    );
+  }
 }
 
-function Example1() {
+function Example1({onOpen, onClose}) {
   return (
     <Swipeable
       leftContent={(
@@ -28,6 +55,8 @@ function Example1() {
           <Text>2</Text>
         </TouchableOpacity>
       ]}
+      onRightButtonsOpenRelease={onOpen}
+      onRightButtonsCloseRelease={onClose}
     >
       <View style={[styles.listItem, {backgroundColor: 'salmon'}]}>
         <Text>Example 1</Text>
@@ -36,7 +65,7 @@ function Example1() {
   );
 }
 
-function Example2() {
+function Example2({onOpen, onClose}) {
   return (
     <Swipeable
       leftButtonWidth={45}
@@ -65,6 +94,8 @@ function Example2() {
           <Text>Pull action</Text>
         </View>
       )}
+      onLeftButtonsOpenRelease={onOpen}
+      onLeftButtonsCloseRelease={onClose}
     >
       <View style={[styles.listItem, {backgroundColor: 'paleturquoise'}]}>
         <Text>Example 2</Text>
@@ -85,9 +116,6 @@ class Example3 extends Component {
 
     return (
       <Swipeable
-        onLeftActionActivate={() => this.setState({leftActionActivated: true})}
-        onLeftActionDeactivate={() => this.setState({leftActionActivated: false})}
-        onLeftActionComplete={() => this.setState({toggle: !toggle})}
         leftActionActivationDistance={200}
         leftContent={(
           <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? 'lightgoldenrodyellow' : 'steelblue'}]}>
@@ -96,6 +124,9 @@ class Example3 extends Component {
               <Text>keep pulling!</Text>}
           </View>
         )}
+        onLeftActionActivate={() => this.setState({leftActionActivated: true})}
+        onLeftActionDeactivate={() => this.setState({leftActionActivated: false})}
+        onLeftActionComplete={() => this.setState({toggle: !toggle})}
       >
         <View style={[styles.listItem, {backgroundColor: toggle ? 'thistle' : 'darkseagreen'}]}>
           <Text>Example 3</Text>
