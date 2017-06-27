@@ -24,7 +24,7 @@
   },
   "peerDependencies": {
     "react": ">=15.2.0",
-    "react-native": ">=0.29.0"
+    "react-native": ">=0.44.0"
   },
   "repository": {
     "type": "git",

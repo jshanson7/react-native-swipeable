@@ -1,5 +1,5 @@
 import React, {PropTypes, PureComponent} from 'react';
-import {Animated, Easing, PanResponder, StyleSheet, View} from 'react-native';
+import {Animated, Easing, PanResponder, StyleSheet, View, ViewPropTypes} from 'react-native';
 
 function noop() {}
 
@@ -79,12 +79,12 @@ export default class Swipeable extends PureComponent {
     swipeStartMinDistance: PropTypes.number,
 
     // styles
-    style: View.propTypes.style,
-    leftContainerStyle: View.propTypes.style,
-    leftButtonContainerStyle: View.propTypes.style,
-    rightContainerStyle: View.propTypes.style,
-    rightButtonContainerStyle: View.propTypes.style,
-    contentContainerStyle: View.propTypes.style
+    style: ViewPropTypes.style,
+    leftContainerStyle: ViewPropTypes.style,
+    leftButtonContainerStyle: ViewPropTypes.style,
+    rightContainerStyle: ViewPropTypes.style,
+    rightButtonContainerStyle: ViewPropTypes.style,
+    contentContainerStyle: ViewPropTypes.style
   };
 
   static defaultProps = {
