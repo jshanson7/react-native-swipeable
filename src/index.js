@@ -1,13 +1,9 @@
+/* eslint-disable import/no-unresolved, import/extensions */
 import React, {PropTypes, PureComponent} from 'react';
 import {Animated, Easing, PanResponder, StyleSheet, View, ViewPropTypes} from 'react-native';
+/* eslint-enable import/no-unresolved, import/extensions */
 
 function noop() {}
-
-const animationFnPropType = PropTypes.oneOf([
-  Animated.decay,
-  Animated.spring,
-  Animated.timing
-]);
 
 export default class Swipeable extends PureComponent {
 
@@ -25,7 +21,7 @@ export default class Swipeable extends PureComponent {
     onLeftActionRelease: PropTypes.func,
     onLeftActionComplete: PropTypes.func,
     leftActionActivationDistance: PropTypes.number,
-    leftActionReleaseAnimationFn: animationFnPropType,
+    leftActionReleaseAnimationFn: PropTypes.func,
     leftActionReleaseAnimationConfig: PropTypes.object,
 
     // right action lifecycle
@@ -34,7 +30,7 @@ export default class Swipeable extends PureComponent {
     onRightActionRelease: PropTypes.func,
     onRightActionComplete: PropTypes.func,
     rightActionActivationDistance: PropTypes.number,
-    rightActionReleaseAnimationFn: animationFnPropType,
+    rightActionReleaseAnimationFn: PropTypes.func,
     rightActionReleaseAnimationConfig: PropTypes.object,
 
     // left buttons lifecycle
@@ -46,9 +42,9 @@ export default class Swipeable extends PureComponent {
     onLeftButtonsCloseComplete: PropTypes.func,
     leftButtonWidth: PropTypes.number,
     leftButtonsActivationDistance: PropTypes.number,
-    leftButtonsOpenReleaseAnimationFn: animationFnPropType,
+    leftButtonsOpenReleaseAnimationFn: PropTypes.func,
     leftButtonsOpenReleaseAnimationConfig: PropTypes.object,
-    leftButtonsCloseReleaseAnimationFn: animationFnPropType,
+    leftButtonsCloseReleaseAnimationFn: PropTypes.func,
     leftButtonsCloseReleaseAnimationConfig: PropTypes.object,
 
     // right buttons lifecycle
@@ -60,9 +56,9 @@ export default class Swipeable extends PureComponent {
     onRightButtonsCloseComplete: PropTypes.func,
     rightButtonWidth: PropTypes.number,
     rightButtonsActivationDistance: PropTypes.number,
-    rightButtonsOpenReleaseAnimationFn: animationFnPropType,
+    rightButtonsOpenReleaseAnimationFn: PropTypes.func,
     rightButtonsOpenReleaseAnimationConfig: PropTypes.object,
-    rightButtonsCloseReleaseAnimationFn: animationFnPropType,
+    rightButtonsCloseReleaseAnimationFn: PropTypes.func,
     rightButtonsCloseReleaseAnimationConfig: PropTypes.object,
 
     // base swipe lifecycle
@@ -70,7 +66,7 @@ export default class Swipeable extends PureComponent {
     onSwipeMove: PropTypes.func,
     onSwipeRelease: PropTypes.func,
     onSwipeComplete: PropTypes.func,
-    swipeReleaseAnimationFn: animationFnPropType,
+    swipeReleaseAnimationFn: PropTypes.func,
     swipeReleaseAnimationConfig: PropTypes.object,
 
     // misc
