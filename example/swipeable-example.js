@@ -48,12 +48,11 @@ function Example1({onOpen, onClose}) {
         </View>
       )}
       rightButtons={[
-        <TouchableOpacity style={[styles.rightSwipeItem, {backgroundColor: 'lightseagreen'}]}>
-          <Text>1</Text>
-        </TouchableOpacity>,
-        <TouchableOpacity style={[styles.rightSwipeItem, {backgroundColor: 'orchid'}]}>
-          <Text>2</Text>
-        </TouchableOpacity>
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <TouchableOpacity style={{backgroundColor: 'red', height: 75, width: 75, borderRadius: 8, justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{color: 'white'}}>Delete</Text>
+          </TouchableOpacity>
+        </View>
       ]}
       onRightButtonsOpenRelease={onOpen}
       onRightButtonsCloseRelease={onClose}
@@ -139,7 +138,8 @@ class Example3 extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20
+    paddingTop: 20,
+    marginHorizontal: 10
   },
   listItem: {
     height: 75,
