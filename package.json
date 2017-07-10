@@ -36,5 +36,8 @@
     "swipe",
     "ListView",
     "TableView"
-  ]
+  ],
+  "dependencies": {
+    "prop-types": "^15.5.10"
+  }
 }
