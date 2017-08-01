@@ -152,7 +152,8 @@ export default class Swipeable extends PureComponent {
     // misc
     onRef: noop,
     onPanAnimatedValueRef: noop,
-    swipeStartMinDistance: 15
+    swipeStartMinDistance: 15,
+    disable: false
   };
 
   state = {
