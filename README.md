@@ -50,6 +50,7 @@ function MyListItem() {
 | `rightButtonWidth`              | integer      | 75      | (optional) resting visible peek of each right button after buttons are swiped open        |
 | `onRef`                         | function     | `null`  | (optional) receive swipeable component instance reference                                 |
 | `onPanAnimatedValueRef`         | function     | `null`  | (optional) receive swipeable pan `Animated.ValueXY` reference for upstream animations     |
+| `bounceOnMount`                 | boolean      | `false` | (optional) To alert the user that swiping is possible                                     |
 
 ### Advanced Props
 
@@ -79,6 +80,14 @@ class MyListItem extends Component {
   }
 }
 ```
+
+#### bounceRight(onDone)
+
+Bounce the right component to alert swiping is possible. `onDone` is an optional callback.
+
+#### bounceLeft(onDone)
+
+Bounce the left component to alert swiping is possible. `onDone` is an optional callback.
 
 ## Example
 
