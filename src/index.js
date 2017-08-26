@@ -6,6 +6,8 @@ import {PropTypes} from 'prop-types';
 
 function noop() {}
 
+const viewPropTypes = ViewPropTypes || View.propTypes;
+
 export default class Swipeable extends PureComponent {
 
   static propTypes = {
@@ -76,12 +78,12 @@ export default class Swipeable extends PureComponent {
     swipeStartMinDistance: PropTypes.number,
 
     // styles
-    style: ViewPropTypes.style,
-    leftContainerStyle: ViewPropTypes.style,
-    leftButtonContainerStyle: ViewPropTypes.style,
-    rightContainerStyle: ViewPropTypes.style,
-    rightButtonContainerStyle: ViewPropTypes.style,
-    contentContainerStyle: ViewPropTypes.style
+    style: viewPropTypes.style,
+    leftContainerStyle: viewPropTypes.style,
+    leftButtonContainerStyle: viewPropTypes.style,
+    rightContainerStyle: viewPropTypes.style,
+    rightButtonContainerStyle: viewPropTypes.style,
+    contentContainerStyle: viewPropTypes.style
   };
 
   static defaultProps = {
