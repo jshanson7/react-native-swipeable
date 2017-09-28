@@ -57,6 +57,8 @@ function Example1({onOpen, onClose}) {
       ]}
       onRightButtonsOpenRelease={onOpen}
       onRightButtonsCloseRelease={onClose}
+      swipeStartMinLeftEdgeClearance={10}
+      swipeStartMinRightEdgeClearance={10}
     >
       <View style={[styles.listItem, {backgroundColor: 'salmon'}]}>
         <Text>Example 1</Text>
@@ -96,6 +98,8 @@ function Example2({onOpen, onClose}) {
       )}
       onLeftButtonsOpenRelease={onOpen}
       onLeftButtonsCloseRelease={onClose}
+      swipeStartMinLeftEdgeClearance={10}
+      swipeStartMinRightEdgeClearance={10}
     >
       <View style={[styles.listItem, {backgroundColor: 'paleturquoise'}]}>
         <Text>Example 2</Text>
@@ -127,6 +131,7 @@ class Example3 extends Component {
         onLeftActionActivate={() => this.setState({leftActionActivated: true})}
         onLeftActionDeactivate={() => this.setState({leftActionActivated: false})}
         onLeftActionComplete={() => this.setState({toggle: !toggle})}
+        swipeStartMinLeftEdgeClearance={10}
       >
         <View style={[styles.listItem, {backgroundColor: toggle ? 'thistle' : 'darkseagreen'}]}>
           <Text>Example 3</Text>

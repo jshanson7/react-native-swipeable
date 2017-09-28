@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 import React, {PureComponent} from 'react';
-import {Animated, Easing, PanResponder, StyleSheet, View, ViewPropTypes} from 'react-native';
+import {Animated, Dimensions, Easing, PanResponder, StyleSheet, View, ViewPropTypes} from 'react-native';
 import {PropTypes} from 'prop-types';
 /* eslint-enable import/no-unresolved, import/extensions */
 
@@ -74,6 +74,8 @@ export default class Swipeable extends PureComponent {
     onRef: PropTypes.func,
     onPanAnimatedValueRef: PropTypes.func,
     swipeStartMinDistance: PropTypes.number,
+    swipeStartMinLeftEdgeClearance: PropTypes.number,
+    swipeStartMinRightEdgeClearance: PropTypes.number,
 
     // styles
     style: ViewPropTypes.style,
@@ -151,7 +153,9 @@ export default class Swipeable extends PureComponent {
     // misc
     onRef: noop,
     onPanAnimatedValueRef: noop,
-    swipeStartMinDistance: 15
+    swipeStartMinDistance: 15,
+    swipeStartMinLeftEdgeClearance: 0,
+    swipeStartMinRightEdgeClearance: 0,
   };
 
   state = {
@@ -206,9 +210,15 @@ export default class Swipeable extends PureComponent {
     dy: this.state.pan.y
   }]);
 
-  _handleMoveShouldSetPanResponder = (event, gestureState) => (
-    Math.abs(gestureState.dx) > this.props.swipeStartMinDistance
-  );
+  _handleMoveShouldSetPanResponder = (event, gestureState) => {
+    const {swipeStartMinDistance, swipeStartMinLeftEdgeClearance, swipeStartMinRightEdgeClearance} = this.props;
+    const gestureStartX = gestureState.moveX - gestureState.dx;
+    return Math.abs(gestureState.dx) > swipeStartMinDistance
+      && (swipeStartMinLeftEdgeClearance === 0
+        || gestureStartX >= swipeStartMinLeftEdgeClearance)
+      && (swipeStartMinRightEdgeClearance === 0
+        || gestureStartX <= Dimensions.get('window').width - swipeStartMinRightEdgeClearance);
+  };
 
   _handlePanResponderStart = (event, gestureState) => {
     const {lastOffset, pan} = this.state;
