@@ -51,6 +51,7 @@ function MyListItem() {
 | `onRef`                         | function     | `null`  | (optional) receive swipeable component instance reference                                 |
 | `onPanAnimatedValueRef`         | function     | `null`  | (optional) receive swipeable pan `Animated.ValueXY` reference for upstream animations     |
 | `bounceOnMount`                 | boolean      | `false` | (optional) To alert the user that swiping is possible                                     |
+| `disable`                       | boolean      | `false` | (optional) Disable swiping                                                                |
 
 ### Advanced Props
 
