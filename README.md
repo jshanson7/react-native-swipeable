@@ -1,13 +1,13 @@
 # React Native Swipeable [![NPM version][npm-image]][npm-url]
 
-A powerful React Native swipe component.  Supports both iOS and Android.
+A powerful React Native swipe component. Supports both iOS and Android.
 
 <img src="https://raw.githubusercontent.com/jshanson7/react-native-swipeable/master/demo.gif" width="310">
 
 ## Installation
 
 ```sh
-npm i --save react-native-swipeable
+npm i --save react-native-swipeable-row
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ npm i --save react-native-swipeable
 Wrap your ListView/TableView items with the `Swipeable` component:
 
 ```javascript
-import Swipeable from 'react-native-swipeable';
+import Swipeable from 'react-native-swipeable-row';
 
 const leftContent = <Text>Pull to activate</Text>;
 
@@ -50,6 +50,8 @@ function MyListItem() {
 | `rightButtonWidth`              | integer      | 75      | (optional) resting visible peek of each right button after buttons are swiped open        |
 | `onRef`                         | function     | `null`  | (optional) receive swipeable component instance reference                                 |
 | `onPanAnimatedValueRef`         | function     | `null`  | (optional) receive swipeable pan `Animated.ValueXY` reference for upstream animations     |
+| `bounceOnMount`                 | boolean      | `false` | (optional) To alert the user that swiping is possible                                     |
+| `disable`                       | boolean      | `false` | (optional) Disable swiping                                                                |
 
 ### Advanced Props
 
@@ -79,6 +81,14 @@ class MyListItem extends Component {
   }
 }
 ```
+
+#### bounceRight(onDone)
+
+Bounce the right component to alert swiping is possible. `onDone` is an optional callback.
+
+#### bounceLeft(onDone)
+
+Bounce the left component to alert swiping is possible. `onDone` is an optional callback.
 
 ## Example
 
@@ -125,4 +135,4 @@ or:
 MIT
 
 [npm-image]: https://badge.fury.io/js/react-native-swipeable.svg
-[npm-url]: https://npmjs.org/package/react-native-swipeable
+[npm-url]: https://npmjs.org/package/react-native-swipeable-row
