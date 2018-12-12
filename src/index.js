@@ -154,6 +154,12 @@ export default class Swipeable extends PureComponent {
     swipeStartMinDistance: 15
   };
 
+  static AutoSwipeType = Object.freeze({
+    Recenter: 'recenter',
+    OpenRightButtons: 'open-right-buttons',
+    OpenLeftButtons: 'open-left-buttons'
+  });
+
   state = {
     pan: new Animated.ValueXY(),
     width: 0,
@@ -177,26 +183,58 @@ export default class Swipeable extends PureComponent {
     this._unmounted = true;
   }
 
+  openLeftButtons = (
+    animationFn,
+    animationConfig,
+    onDone
+  ) => {
+    this._autoSwipe(Swipeable.AutoSwipeType.OpenLeftButtons, animationFn, animationConfig, onDone);
+  };
+
+  openRightButtons = (
+    animationFn,
+    animationConfig,
+    onDone
+  ) => {
+    this._autoSwipe(Swipeable.AutoSwipeType.OpenRightButtons, animationFn, animationConfig, onDone);
+  };
+
   recenter = (
     animationFn = this.props.swipeReleaseAnimationFn,
     animationConfig = this.props.swipeReleaseAnimationConfig,
     onDone
   ) => {
+    this._autoSwipe(Swipeable.AutoSwipeType.Recenter, animationFn, animationConfig, onDone);
+  };
+
+  _autoSwipe = (
+    type,
+    animationFn,
+    animationConfig,
+    onDone
+  ) => {
     const {pan} = this.state;
 
+    const finalAnimationFn = animationFn || Animated.timing;
+    const finalAnimationConfig = animationConfig || {
+      toValue: this._getAutoSwipeTargetPoint(type),
+      duration: 250,
+      easing: Easing.elastic(0.5)
+    };
+
     this.setState({
-      lastOffset: {x: 0, y: 0},
+      lastOffset: this._getAutoSwipeTargetPoint(type),
       leftActionActivated: false,
-      leftButtonsActivated: false,
-      leftButtonsOpen: false,
+      leftButtonsActivated: type === Swipeable.AutoSwipeType.OpenLeftButtons,
+      leftButtonsOpen: type === Swipeable.AutoSwipeType.OpenLeftButtons,
       rightActionActivated: false,
-      rightButtonsActivated: false,
-      rightButtonsOpen: false
+      rightButtonsActivated: type === Swipeable.AutoSwipeType.OpenRightButtons,
+      rightButtonsOpen: type === Swipeable.AutoSwipeType.OpenRightButtons
     });
 
     pan.flattenOffset();
 
-    animationFn(pan, animationConfig).start(onDone);
+    finalAnimationFn(pan, finalAnimationConfig).start(onDone);
   };
 
   _unmounted = false;
@@ -205,6 +243,22 @@ export default class Swipeable extends PureComponent {
     dx: this.state.pan.x,
     dy: this.state.pan.y
   }]);
+
+  _getAutoSwipeTargetPoint(type) {
+    switch (type) {
+      case Swipeable.AutoSwipeType.Recenter:
+        return {x: 0, y: 0};
+
+      case Swipeable.AutoSwipeType.OpenLeftButtons:
+        return {x: this.props.leftButtons && (this.props.leftButtons.length * this.props.leftButtonWidth), y: 0};
+
+      case Swipeable.AutoSwipeType.OpenRightButtons:
+        return {x: this.props.rightButtons && (-this.props.rightButtons.length * this.props.rightButtonWidth), y: 0};
+
+      default:
+        return {x: 0, y: 0};
+    }
+  }
 
   _handleMoveShouldSetPanResponder = (event, gestureState) => (
     Math.abs(gestureState.dx) > this.props.swipeStartMinDistance
