@@ -74,6 +74,7 @@ export default class Swipeable extends PureComponent {
     onRef: PropTypes.func,
     onPanAnimatedValueRef: PropTypes.func,
     swipeStartMinDistance: PropTypes.number,
+    isRTL: PropTypes.bool,
 
     // styles
     style: ViewPropTypes.style,
@@ -151,7 +152,8 @@ export default class Swipeable extends PureComponent {
     // misc
     onRef: noop,
     onPanAnimatedValueRef: noop,
-    swipeStartMinDistance: 15
+    swipeStartMinDistance: 15,
+    isRTL: false
   };
 
   static AutoSwipeType = Object.freeze({
@@ -244,16 +246,24 @@ export default class Swipeable extends PureComponent {
     dy: this.state.pan.y
   }]);
 
+  _invertInRtl(value) {
+    return this.props.isRTL ? -value : value;
+  }
+
+  _getTextDirectionDependentValue(ltrValue, rtlValue) {
+    return this.props.isRTL ? rtlValue : ltrValue;
+  }
+
   _getAutoSwipeTargetPoint(type) {
     switch (type) {
       case Swipeable.AutoSwipeType.Recenter:
         return {x: 0, y: 0};
 
       case Swipeable.AutoSwipeType.OpenLeftButtons:
-        return {x: this.props.leftButtons && (this.props.leftButtons.length * this.props.leftButtonWidth), y: 0};
+        return {x: this.props.leftButtons && this._invertInRtl(this.props.leftButtons.length * this.props.leftButtonWidth), y: 0};
 
       case Swipeable.AutoSwipeType.OpenRightButtons:
-        return {x: this.props.rightButtons && (-this.props.rightButtons.length * this.props.rightButtonWidth), y: 0};
+        return {x: this.props.rightButtons && this._invertInRtl(-this.props.rightButtons.length * this.props.rightButtonWidth), y: 0};
 
       default:
         return {x: 0, y: 0};
@@ -294,7 +304,8 @@ export default class Swipeable extends PureComponent {
       rightActionActivated,
       rightButtonsActivated
     } = this.state;
-    const {dx, vx} = gestureState;
+    const dx = this._invertInRtl(gestureState.dx);
+    const vx = this._invertInRtl(gestureState.vx);
     const x = dx + lastOffset.x;
     const canSwipeRight = this._canSwipeRight();
     const canSwipeLeft = this._canSwipeLeft();
@@ -584,7 +595,7 @@ export default class Swipeable extends PureComponent {
       return {
         ...swipeReleaseAnimationConfig,
         toValue: {
-          x: leftButtons.length * leftButtonWidth,
+          x: this._invertInRtl(leftButtons.length * leftButtonWidth),
           y: 0
         },
         ...leftButtonsOpenReleaseAnimationConfig
@@ -595,7 +606,7 @@ export default class Swipeable extends PureComponent {
       return {
         ...swipeReleaseAnimationConfig,
         toValue: {
-          x: rightButtons.length * rightButtonWidth * -1,
+          x: this._invertInRtl(rightButtons.length * rightButtonWidth * -1),
           y: 0
         },
         ...rightButtonsOpenReleaseAnimationConfig
@@ -619,13 +630,17 @@ export default class Swipeable extends PureComponent {
     const canSwipeLeft = this._canSwipeLeft();
     const canSwipeRight = this._canSwipeRight();
     const count = buttons.length;
-    const leftEnd = canSwipeLeft ? -width : 0;
-    const rightEnd = canSwipeRight ? width : 0;
-    const inputRange = isLeftButtons ? [0, rightEnd] : [leftEnd, 0];
+    const leftEnd = this._getTextDirectionDependentValue(canSwipeLeft ? -width : 0, canSwipeLeft ? 0 : -width);
+    const rightEnd = this._getTextDirectionDependentValue(canSwipeRight ? width : 0, canSwipeRight ? 0 : width);
+    const inputRange = this._getTextDirectionDependentValue(
+      isLeftButtons ? [0, rightEnd] : [leftEnd, 0],
+      isLeftButtons ? [leftEnd, 0] : [0, rightEnd]);
 
     return buttons.map((buttonContent, index) => {
       const outputMultiplier = -index / count;
-      const outputRange = isLeftButtons ? [0, rightEnd * outputMultiplier] : [leftEnd * outputMultiplier, 0];
+      const outputRange = this._getTextDirectionDependentValue(
+        isLeftButtons ? [0, rightEnd * outputMultiplier] : [leftEnd * outputMultiplier, 0],
+        isLeftButtons ? [leftEnd * outputMultiplier, 0] : [0, rightEnd * outputMultiplier]);
       const transform = [{
         translateX: pan.x.interpolate({
           inputRange,
@@ -665,11 +680,18 @@ export default class Swipeable extends PureComponent {
     const canSwipeRight = this._canSwipeRight();
     const transform = [{
       translateX: pan.x.interpolate({
-        inputRange: [canSwipeLeft ? -width : 0, canSwipeRight ? width : 0],
-        outputRange: [
-          canSwipeLeft ? -width + StyleSheet.hairlineWidth : 0,
-          canSwipeRight ? width - StyleSheet.hairlineWidth : 0
-        ],
+        inputRange: this._getTextDirectionDependentValue(
+          [canSwipeLeft ? -width : 0, canSwipeRight ? width : 0],
+          [canSwipeLeft ? 0 : -width, canSwipeRight ? 0 : width]),
+        outputRange: this._getTextDirectionDependentValue(
+          [
+            canSwipeLeft ? -width + StyleSheet.hairlineWidth : 0,
+            canSwipeRight ? width - StyleSheet.hairlineWidth : 0
+          ],
+          [
+            canSwipeLeft ? 0 : -width + StyleSheet.hairlineWidth,
+            canSwipeRight ? 0 : width - StyleSheet.hairlineWidth
+          ]),
         extrapolate: 'clamp'
       })
     }];
