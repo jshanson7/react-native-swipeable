@@ -74,6 +74,7 @@ export default class Swipeable extends PureComponent {
     onRef: PropTypes.func,
     onPanAnimatedValueRef: PropTypes.func,
     swipeStartMinDistance: PropTypes.number,
+    renderButtonsAfterOnLayout: PropTypes.bool,
 
     // styles
     style: ViewPropTypes.style,
@@ -151,7 +152,9 @@ export default class Swipeable extends PureComponent {
     // misc
     onRef: noop,
     onPanAnimatedValueRef: noop,
-    swipeStartMinDistance: 15
+    swipeStartMinDistance: 15,
+    renderButtonsAfterOnLayout: false,
+
   };
 
   state = {
@@ -560,8 +563,13 @@ export default class Swipeable extends PureComponent {
   }
 
   _renderButtons(buttons, isLeftButtons) {
-    const {leftButtonContainerStyle, rightButtonContainerStyle} = this.props;
+    const {leftButtonContainerStyle, rightButtonContainerStyle, renderButtonsAfterOnLayout} = this.props;
     const {pan, width} = this.state;
+
+    if (renderButtonsAfterOnLayout && width === 0) {
+        return null;
+    }
+
     const canSwipeLeft = this._canSwipeLeft();
     const canSwipeRight = this._canSwipeRight();
     const count = buttons.length;
