@@ -1,13 +1,13 @@
 {
-  "name": "react-native-swipeable",
-  "version": "0.6.0",
+  "name": "react-native-swipeable-rtl",
+  "version": "0.1.0",
   "description": "A powerful React Native swipe component",
   "main": "lib/index.js",
   "scripts": {
     "build": "make build",
     "lint": "make lint"
   },
-  "author": "Jeff Hanson",
+  "author": "Mohammd Ali Smadi",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jshanson7/react-native-swipeable.git"
+    "url": "git+https://github.com/mohammdsmadi/react-native-swipeable"
   },
   "keywords": [
     "react",
@@ -39,5 +39,12 @@
   ],
   "dependencies": {
     "prop-types": "^15.5.10"
+  },
+  "bugs": {
+    "url": "https://github.com/mohammdsmadi/react-native-swipeable/issues"
+  },
+  "homepage": "https://github.com/mohammdsmadi/react-native-swipeable#readme",
+  "directories": {
+    "example": "example"
   }
 }

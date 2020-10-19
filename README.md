@@ -1,6 +1,6 @@
 # React Native Swipeable [![NPM version][npm-image]][npm-url]
 
-A powerful React Native swipe component.  Supports both iOS and Android.
+A powerful React Native swipe component. Supports both iOS and Android.
 
 <img src="https://raw.githubusercontent.com/jshanson7/react-native-swipeable/master/demo.gif" width="310">
 
@@ -15,13 +15,17 @@ npm i --save react-native-swipeable
 Wrap your ListView/TableView items with the `Swipeable` component:
 
 ```javascript
-import Swipeable from 'react-native-swipeable';
+import Swipeable from "react-native-swipeable";
 
 const leftContent = <Text>Pull to activate</Text>;
 
 const rightButtons = [
-  <TouchableHighlight><Text>Button 1</Text></TouchableHighlight>,
-  <TouchableHighlight><Text>Button 2</Text></TouchableHighlight>
+  <TouchableHighlight>
+    <Text>Button 1</Text>
+  </TouchableHighlight>,
+  <TouchableHighlight>
+    <Text>Button 2</Text>
+  </TouchableHighlight>,
 ];
 
 function MyListItem() {
@@ -36,7 +40,7 @@ function MyListItem() {
 ### Props
 
 | prop                            | type         | default | description                                                                               |
-|---------------------------------|--------------|---------|-------------------------------------------------------------------------------------------|
+| ------------------------------- | ------------ | ------- | ----------------------------------------------------------------------------------------- |
 | `children`                      | renderable   | `null`  | swipeable content                                                                         |
 | `leftContent`                   | renderable   | `null`  | (optional) left content visible during pull action                                        |
 | `rightContent`                  | renderable   | `null`  | (optional) right content visible during pull action                                       |
@@ -59,11 +63,10 @@ function MyListItem() {
 
 #### recenter()
 
-Imperatively reset swipeable component back to initial position.  This is useful if buttons are exposed and the user has begun scrolling the parent view.
+Imperatively reset swipeable component back to initial position. This is useful if buttons are exposed and the user has begun scrolling the parent view.
 
 ```javascript
 class MyListItem extends Component {
-
   swipeable = null;
 
   handleUserBeganScrollingParentView() {
@@ -72,7 +75,10 @@ class MyListItem extends Component {
 
   render() {
     return (
-      <Swipeable onRef={ref => this.swipeable = ref} rightButtons={rightButtons}>
+      <Swipeable
+        onRef={(ref) => (this.swipeable = ref)}
+        rightButtons={rightButtons}
+      >
         <Text>My swipeable content</Text>
       </Swipeable>
     );
@@ -97,7 +103,7 @@ react-native run-ios # or run-android
 
 > Action being triggered more than once ([#3](https://github.com/jshanson7/react-native-swipeable/issues/3))
 
-This seems to occur occasionally (but not always) with certain `ScrollView` and `ListView` configurations.  The fix is simple though, just ensure that `scrollEnabled` is set to `false` while the user is swiping a row.
+This seems to occur occasionally (but not always) with certain `ScrollView` and `ListView` configurations. The fix is simple though, just ensure that `scrollEnabled` is set to `false` while the user is swiping a row.
 
 ```js
 <ScrollView scrollEnabled={!this.state.isSwiping}>
@@ -107,7 +113,9 @@ This seems to occur occasionally (but not always) with certain `ScrollView` and 
   </Swipeable>
 </ScrollView>
 ```
+
 or:
+
 ```js
 <ListView
   scrollEnabled={!this.state.isSwiping}
