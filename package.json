@@ -1,13 +1,13 @@
 {
-  "name": "react-native-swipeable",
-  "version": "0.6.0",
-  "description": "A powerful React Native swipe component",
+  "name": "react-native-swipeable-row",
+  "version": "0.8.1",
+  "description": "A powerful React Native swipe component based on @jshanson7 package",
   "main": "lib/index.js",
   "scripts": {
     "build": "make build",
     "lint": "make lint"
   },
-  "author": "Jeff Hanson",
+  "author": "Mårten Cederman",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jshanson7/react-native-swipeable.git"
+    "url": "git+https://github.com/Cederman/react-native-swipeable"
   },
   "keywords": [
     "react",

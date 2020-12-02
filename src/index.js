@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved, import/extensions */
 import React, {PureComponent} from 'react';
-import {Animated, Easing, PanResponder, StyleSheet, View, ViewPropTypes} from 'react-native';
+import {Animated, Dimensions, Easing, PanResponder, StyleSheet, View, ViewPropTypes} from 'react-native';
 import {PropTypes} from 'prop-types';
 /* eslint-enable import/no-unresolved, import/extensions */
 
@@ -74,6 +74,9 @@ export default class Swipeable extends PureComponent {
     onRef: PropTypes.func,
     onPanAnimatedValueRef: PropTypes.func,
     swipeStartMinDistance: PropTypes.number,
+    swipeStartMinLeftEdgeClearance: PropTypes.number,
+    swipeStartMinRightEdgeClearance: PropTypes.number,
+    disable: PropTypes.bool,
 
     // styles
     style: ViewPropTypes.style,
@@ -152,7 +155,11 @@ export default class Swipeable extends PureComponent {
     // misc
     onRef: noop,
     onPanAnimatedValueRef: noop,
-    swipeStartMinDistance: 15
+    swipeStartMinDistance: 15,
+    swipeStartMinLeftEdgeClearance: 0,
+    swipeStartMinRightEdgeClearance: 0,
+    bounceOnMount: false,
+    disable: false,
   };
 
   state = {
@@ -172,6 +179,12 @@ export default class Swipeable extends PureComponent {
 
     onRef(this);
     onPanAnimatedValueRef(this.state.pan);
+  }
+
+  componentDidMount() {
+    if (this.props.bounceOnMount) {
+      setTimeout(this._bounceOnMount, 700);
+    }
   }
 
   componentWillUnmount() {
@@ -200,6 +213,48 @@ export default class Swipeable extends PureComponent {
     animationFn(pan, animationConfig).start(onDone);
   };
 
+  _bounceOnMount = () => {
+    if (this._canSwipeLeft()) {
+      this.bounceRight(this.bounceLeft);
+    } else if (this._canSwipeRight()) {
+      this.bounceLeft();
+    }
+  };
+
+  bounceRight = (onDone) => {
+    if (this._canSwipeLeft()) {
+      this.setState({
+        rightActionActivated: true,
+        rightButtonsActivated: true,
+        rightButtonsOpen: true
+      });
+      this._bounce({x: -50, y: 0}, onDone);
+    }
+  };
+
+  bounceLeft = (onDone) => {
+    if (this._canSwipeRight()) {
+      this.setState({
+        leftActionActivated: true,
+        leftButtonsActivated: true,
+        leftButtonsOpen: true
+      });
+      this._bounce({x: 50, y: 0}, onDone);
+    }
+  };
+
+  _bounce = (toValue, onDone) => {
+    const {pan} = this.state;
+    pan.flattenOffset();
+
+    const {swipeReleaseAnimationFn, swipeReleaseAnimationConfig} = this.props;
+    Animated.timing(pan, {
+      toValue,
+      duration: 250,
+      easing: Easing.elastic(0.5)
+    }).start(() => this.recenter(swipeReleaseAnimationFn, swipeReleaseAnimationConfig, () => onDone && onDone()));
+  };
+
   _unmounted = false;
 
   _handlePan = Animated.event([null, {
@@ -207,11 +262,21 @@ export default class Swipeable extends PureComponent {
     dy: this.state.pan.y,
   }], {useNativeDriver: false});
 
-  _handleMoveShouldSetPanResponder = (event, gestureState) => (
-    Math.abs(gestureState.dx) > this.props.swipeStartMinDistance
-  );
+  _handleMoveShouldSetPanResponder = (event, gestureState) => {
+    const {swipeStartMinDistance, swipeStartMinLeftEdgeClearance, swipeStartMinRightEdgeClearance} = this.props;
+    const gestureStartX = gestureState.moveX - gestureState.dx;
+    return Math.abs(gestureState.dx) > swipeStartMinDistance
+      && (swipeStartMinLeftEdgeClearance === 0
+        || gestureStartX >= swipeStartMinLeftEdgeClearance)
+      && (swipeStartMinRightEdgeClearance === 0
+        || gestureStartX <= Dimensions.get('window').width - swipeStartMinRightEdgeClearance);
+  };
 
   _handlePanResponderStart = (event, gestureState) => {
+    if (this.props.disable) {
+      return;
+    }
+
     const {lastOffset, pan} = this.state;
 
     pan.setOffset(lastOffset);
@@ -219,6 +284,10 @@ export default class Swipeable extends PureComponent {
   };
 
   _handlePanResponderMove = (event, gestureState) => {
+    if (this.props.disable) {
+      return;
+    }
+
     const {
       leftActionActivationDistance,
       leftButtonsActivationDistance,
@@ -314,6 +383,10 @@ export default class Swipeable extends PureComponent {
   };
 
   _handlePanResponderEnd = (event, gestureState) => {
+    if (this.props.disable) {
+      return;
+    }
+
     const {
       onLeftActionRelease,
       onLeftActionDeactivate,
