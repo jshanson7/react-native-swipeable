@@ -4,6 +4,7 @@
   "description": "A powerful React Native swipe component",
   "main": "lib/index.js",
   "scripts": {
+    "prepare": "make build",
     "build": "make build",
     "lint": "make lint"
   },
