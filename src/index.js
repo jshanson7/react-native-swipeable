@@ -74,6 +74,7 @@ export default class Swipeable extends PureComponent {
     onRef: PropTypes.func,
     onPanAnimatedValueRef: PropTypes.func,
     swipeStartMinDistance: PropTypes.number,
+    disable: PropTypes.bool,
 
     // styles
     style: ViewPropTypes.style,
@@ -152,7 +153,8 @@ export default class Swipeable extends PureComponent {
     // misc
     onRef: noop,
     onPanAnimatedValueRef: noop,
-    swipeStartMinDistance: 15
+    swipeStartMinDistance: 15,
+    disable: false
   };
 
   state = {
@@ -212,6 +214,10 @@ export default class Swipeable extends PureComponent {
   );
 
   _handlePanResponderStart = (event, gestureState) => {
+    if (this.props.disable) {
+      return;
+    }
+
     const {lastOffset, pan} = this.state;
 
     pan.setOffset(lastOffset);
@@ -219,6 +225,10 @@ export default class Swipeable extends PureComponent {
   };
 
   _handlePanResponderMove = (event, gestureState) => {
+    if (this.props.disable) {
+      return;
+    }
+
     const {
       leftActionActivationDistance,
       leftButtonsActivationDistance,
@@ -314,6 +324,10 @@ export default class Swipeable extends PureComponent {
   };
 
   _handlePanResponderEnd = (event, gestureState) => {
+    if (this.props.disable) {
+      return;
+    }
+
     const {
       onLeftActionRelease,
       onLeftActionDeactivate,
