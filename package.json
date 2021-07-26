@@ -3,6 +3,7 @@
   "version": "0.6.0",
   "description": "A powerful React Native swipe component",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "make build",
     "lint": "make lint"
