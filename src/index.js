@@ -167,14 +167,14 @@ export default class Swipeable extends PureComponent {
     rightButtonsOpen: false
   };
 
-  componentDidMount() {
+  UNSAFE_componentDidMount() {
     const {onPanAnimatedValueRef, onRef} = this.props;
 
     onRef(this);
     onPanAnimatedValueRef(this.state.pan);
   }
 
-  componentWillUnmount() {
+  UNSAFE_componentWillUnmount() {
     this._unmounted = true;
   }
 
