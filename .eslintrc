@@ -1,6 +1,10 @@
 {
-  "extends": "airbnb",
-  "parser": "babel-eslint",
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier"],
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false
+  },
   "rules": {
     "arrow-parens": 0,
     "comma-dangle": 0,
