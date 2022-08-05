@@ -12,7 +12,7 @@
     "react-native-swipeable": "../"
   },
   "devDependencies": {
-    "babel-preset-react-native": "1.9.1",
+    "metro-react-native-babel-preset": "0.72.0",
     "react-test-renderer": "15.4.1"
   }
 }
